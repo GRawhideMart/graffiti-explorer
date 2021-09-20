@@ -3,7 +3,7 @@ import { createTheme } from "@mui/material/styles";
 export default createTheme({
   typography: {
     fontFamily: [
-      "Shadows Into Light",
+      //"Shadows Into Light",
       "IBM Plex Sans Arabic",
       "-apple-system",
       "BlinkMacSystemFont",
