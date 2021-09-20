@@ -14,6 +14,18 @@ app.use(
   })
 );
 
+// Database initialization
+const db = require("./config/db.config");
+(async () => {
+  // Sync the DB through an anonymous function
+  try {
+    await db.sync();
+    console.log("Database synched correctly");
+  } catch (error) {
+    return Promise.reject(error);
+  }
+})();
+
 app.get("/", (req, res) => {
   console.log(
     `Received a ${req.method} request from user-agent ${
@@ -25,6 +37,16 @@ app.get("/", (req, res) => {
 
 // Listen
 const PORT = process.env.PORT || 8000;
-app.listen(process.env.PORT || 8000, () => {
-  console.log(`Server started on port ${PORT}`);
-});
+db.authenticate() // Try to connect to database
+  .then(() => {
+    // Upon successful promise completion
+    console.log("Connection estabilished successfully");
+    app.listen(PORT, () => {
+      // Start server
+      console.log(`Server listening on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    // Upon unfulfilled promise, DO NOT start server
+    console.error("Couldn't connect to database:", err.message);
+  });
