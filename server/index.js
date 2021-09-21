@@ -15,11 +15,18 @@ app.use(
 );
 
 // Database initialization
+const Graffiti = require("./models/graffiti.model");
+const Countries = require("./models/countries.model");
+const Cities = require("./models/cities.model");
+const Authors = require("./models/authors.model");
+const Users = require("./models/users.model");
+const Visits = require("./models/visits.model");
+const Comments = require("./models/comments.model");
 const db = require("./config/db.config");
 (async () => {
   // Sync the DB through an anonymous function
   try {
-    await db.sync();
+    await db.sync({ alter: true });
     console.log("Database synched correctly");
   } catch (error) {
     return Promise.reject(error);
