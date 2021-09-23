@@ -22,6 +22,8 @@ const Authors = require("./models/authors.model");
 const Users = require("./models/users.model");
 const Visits = require("./models/visits.model");
 const Comments = require("./models/comments.model");
+const associations = require("./models/associations");
+
 const db = require("./config/db.config");
 (async () => {
   // Sync the DB through an anonymous function
