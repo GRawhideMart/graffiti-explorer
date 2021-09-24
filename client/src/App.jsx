@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -8,24 +10,48 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Divider from "@mui/material/Divider";
+import Avatar from "@mui/material/Avatar";
 
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import { useState } from "react";
-import { Drawer } from "@mui/material";
+import Drawer from "./components/Drawer";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export default function Album() {
-  // Side Drawer state
+  // Side Drawer state and elements
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const menuItems = ["Home", "Map", "Dashboard", "Logout"];
 
   return (
     <div>
-      <Drawer open={isDrawerOpen}>
-        <Button onClick={() => setIsDrawerOpen(false)}>Close</Button>
+      {/* Drawer component needs the state to know how to handle swipes */}
+      <Drawer isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen}>
+        <List>
+          {menuItems.map((text, index) => (
+            <ListItem button key={index}>
+              <ListItemText primary={text}></ListItemText>
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          <ListItemAvatar>
+            <Avatar>SW</Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+          >
+            Sara Walker
+          </ListItemText>
+        </List>
       </Drawer>
-      {/* Drawer's state must be passed down to the appbar, in order to keep track of the state */}
+      {/* Drawer's state must be passed down to the appbar too, since it contains the menu button which must know the state of the drawer */}
       <Header isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
       <main>
         {/* Hero unit */}
@@ -74,10 +100,6 @@ export default function Album() {
                 >
                   <CardMedia
                     component="img"
-                    sx={{
-                      // 16:9
-                      pt: "56.25%",
-                    }}
                     image="https://source.unsplash.com/random"
                     alt="random"
                   />
