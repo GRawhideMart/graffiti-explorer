@@ -35,7 +35,7 @@ export default function App() {
                 color: "black",
               }}
             >
-              <ListItem button>
+              <ListItem button onClick={() => setIsDrawerOpen(false)}>
                 <ListItemText primary={text}></ListItemText>
               </ListItem>
             </Link>
