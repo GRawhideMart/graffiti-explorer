@@ -1,11 +1,11 @@
 import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "./appbar.component";
 
-const Header = () => {
+const Header = ({ isDrawerOpen, setIsDrawerOpen }) => {
   return (
     <div>
       <CssBaseline />
-      <AppBar />
+      <AppBar isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
     </div>
   );
 };

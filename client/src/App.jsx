@@ -11,13 +11,22 @@ import Typography from "@mui/material/Typography";
 
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import { useState } from "react";
+import { Drawer } from "@mui/material";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export default function Album() {
+  // Side Drawer state
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   return (
     <div>
-      <Header />
+      <Drawer open={isDrawerOpen}>
+        <Button onClick={() => setIsDrawerOpen(false)}>Close</Button>
+      </Drawer>
+      {/* Drawer's state must be passed down to the appbar, in order to keep track of the state */}
+      <Header isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
       <main>
         {/* Hero unit */}
         <Box
@@ -48,10 +57,7 @@ export default function Album() {
               direction="row"
               spacing={2}
               justifyContent="center"
-            >
-              <Button variant="contained">Main call to action</Button>
-              <Button variant="outlined">Secondary action</Button>
-            </Stack>
+            ></Stack>
           </Container>
         </Box>
         <Container sx={{ py: 8 }} maxWidth="md">
