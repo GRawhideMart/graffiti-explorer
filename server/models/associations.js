@@ -16,4 +16,15 @@ associations.Countries.hasMany(associations.Cities);
 associations.Graffiti.belongsTo(associations.Authors);
 associations.Authors.hasMany(associations.Graffiti);
 
+// Each graffiti has a certain number of people loving it, and each user loves a certain number of graffitis
+associations.Graffiti.belongsToMany(associations.Users, {
+  through: "Favorites",
+});
+associations.Users.belongsToMany(associations.Graffiti, {
+  through: "Favorites",
+});
+
+// A user can post many comments, but a comment can only belong to a single user
+// This is not necessary in the MVP, since there is no commenting feature required
+
 module.exports = associations;

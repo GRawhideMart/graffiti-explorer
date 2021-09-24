@@ -1,3 +1,5 @@
+// Even if in the MVP there will be one user, she cannot be hardcoded because there has to be a way to track the favorites
+
 const { DataTypes } = require("sequelize");
 const db = require("../config/db.config");
 const bcrypt = require("bcrypt");
