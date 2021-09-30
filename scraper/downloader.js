@@ -61,7 +61,7 @@ axios
                   }
                 );
               });
-            }, 3000 + Math.random(1000));
+            }, 10000 + Math.random(1000));
           });
         })
         .catch((err) => {
@@ -114,7 +114,7 @@ axios
                   }
                 );
               });
-            }, 3000 + Math.random(1000));
+            }, 10000 + Math.random(1000));
           });
           //console.log(nyLinks);
         })
@@ -164,7 +164,7 @@ axios
                   }
                 );
               });
-            }, 3000 + Math.random(1000));
+            }, 10000 + Math.random(1000));
           });
         })
         .catch((err) => {
