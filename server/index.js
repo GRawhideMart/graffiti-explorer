@@ -44,6 +44,12 @@ app.get("/", (req, res) => {
   res.status(200).end("Hello World");
 });
 
+app.get("/api/location", (req, res) => {
+  Graffiti.findAll({ attributes: ["geolocation"] }).then((data) => {
+    res.json(data);
+  });
+});
+
 // Listen
 const PORT = process.env.PORT || 8000;
 db.authenticate() // Try to connect to database
