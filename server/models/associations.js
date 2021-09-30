@@ -24,6 +24,14 @@ associations.Users.belongsToMany(associations.Graffiti, {
   through: "Favorites",
 });
 
+// A graffiti is in a single city, but a city has more than one graffiti
+associations.Graffiti.belongsTo(associations.Cities);
+associations.Cities.hasMany(associations.Graffiti);
+
+// A graffiti is in a single country, but a country has more than one graffiti
+associations.Graffiti.belongsTo(associations.Countries);
+associations.Countries.hasMany(associations.Graffiti);
+
 // A user can post many comments, but a comment can only belong to a single user
 // This is not necessary in the MVP, since there is no commenting feature required
 

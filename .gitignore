@@ -3,6 +3,7 @@
 # dependencies
 /client/node_modules
 /server/node_modules
+/scraper/node_modules
 /client/.pnp
 /client.pnp.js
 
@@ -15,6 +16,8 @@
 # misc
 /client/.env
 /server/.env
+/scraper/.env
+/scraper/*/
 /client/.DS_Store
 /client/.env.local
 /client/.env.development.local

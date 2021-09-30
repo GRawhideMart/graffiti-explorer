@@ -16,13 +16,13 @@ app.use(
 
 // Database initialization
 const Graffiti = require("./models/graffiti.model");
-const Countries = require("./models/countries.model");
-const Cities = require("./models/cities.model");
-const Authors = require("./models/authors.model");
-const Users = require("./models/users.model");
-const Visits = require("./models/visits.model");
-const Comments = require("./models/comments.model");
-const associations = require("./models/associations");
+// const Countries = require("./models/countries.model");
+// const Cities = require("./models/cities.model");
+// const Authors = require("./models/authors.model");
+// const Users = require("./models/users.model");
+// const Visits = require("./models/visits.model");
+// const Comments = require("./models/comments.model");
+// const associations = require("./models/associations");
 
 const db = require("./config/db.config");
 (async () => {
