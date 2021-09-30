@@ -53,7 +53,7 @@ axios
             setInterval(() => {
               axios.get(link).then((res) => {
                 fs.writeFileSync(
-                  `${londonDir}/${link.split("/")[4]}.html`,
+                  `${milanDir}/${link.split("/")[4]}.html`,
                   res.data,
                   (err) => {
                     if (err) throw err;
