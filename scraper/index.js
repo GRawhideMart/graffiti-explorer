@@ -8,6 +8,7 @@ const Graffiti = require("../server/models/graffiti.model");
 // Delete everything from table, only in development
 Graffiti.destroy({ where: {} });
 
+// Build directory names and combining them
 const londonDir = path.join(__dirname, "london");
 const milanDir = path.join(__dirname, "milan");
 const nyDir = path.join(__dirname, "nyc");
@@ -16,6 +17,7 @@ const kievDir = path.join(__dirname, "kiev");
 
 const directories = [londonDir, milanDir, nyDir, bucharestDir, kievDir];
 
+// loop through each directory and file to scrape the informations
 directories.forEach((directory) => {
   fs.readdir(directory, (err, files) => {
     if (err) throw err;
@@ -46,6 +48,7 @@ directories.forEach((directory) => {
           location,
         });
         Graffiti.create({
+          // use Sequelize's model to insert information in the DB
           image,
           title,
           author,

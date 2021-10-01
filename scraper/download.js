@@ -10,6 +10,7 @@ const createDirectoryIfNotExists = (name) => {
   fs.mkdirSync(dirName);
 };
 
+// Scrapes the categories page for each city (typically it's neighborhoods)
 const getCategories = async (cityUrl) => {
   const cityCategories = [];
   const response = await axios.get(cityUrl + "/categories");
@@ -21,6 +22,7 @@ const getCategories = async (cityUrl) => {
   return cityCategories;
 };
 
+// Builds URLs for each page of each category, providing categories are arrays
 const getPagesForCategories = async (categories) => {
   const allPages = [];
   for (let index = 0; index < categories.length; index++) {
@@ -38,6 +40,7 @@ const getPagesForCategories = async (categories) => {
   return allPages;
 };
 
+// For each of the pages (caught from past links) return an array with every piece's link
 const getLinks = async (pages) => {
   const links = [];
   for (let index = 0; index < pages.length; index++) {
@@ -51,6 +54,15 @@ const getLinks = async (pages) => {
   return links;
 };
 
+// Builds single array with every single page by combining the methods above
+const buildPagesArray = async (cityUrl) => {
+  const categories = await getCategories(cityUrl);
+  const pagesPerCategory = await getPagesForCategories(categories);
+  const links = await getLinks(pagesPerCategory);
+  return links;
+};
+
+// Function to Download in a subfolder, the name of which must be provided as rootDir, starting from an array of pages
 const downloader = async (pages, rootDir) => {
   const directory = path.join(__dirname, rootDir);
   if (!fs.existsSync(directory)) {
@@ -70,13 +82,6 @@ const downloader = async (pages, rootDir) => {
       );
     }, 40000 + Math.floor(Math.random() * 40000));
   }
-};
-
-const buildPagesArray = async (cityUrl) => {
-  const categories = await getCategories(cityUrl);
-  const pagesPerCategory = await getPagesForCategories(categories);
-  const links = await getLinks(pagesPerCategory);
-  return links;
 };
 
 module.exports = { buildPagesArray, downloader };
