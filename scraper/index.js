@@ -11,8 +11,10 @@ Graffiti.destroy({ where: {} });
 const londonDir = path.join(__dirname, "london");
 const milanDir = path.join(__dirname, "milan");
 const nyDir = path.join(__dirname, "nyc");
+const bucharestDir = path.join(__dirname, "bucharest");
+const kievDir = path.join(__dirname, "kiev");
 
-const directories = [londonDir, milanDir, nyDir];
+const directories = [londonDir, milanDir, nyDir, bucharestDir, kievDir];
 
 directories.forEach((directory) => {
   fs.readdir(directory, (err, files) => {
