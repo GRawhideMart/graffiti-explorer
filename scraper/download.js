@@ -72,15 +72,14 @@ const downloader = async (pages, rootDir) => {
   for (let index = 0; index < pages.length; index++) {
     setInterval(async () => {
       const response = await axios.get(pages[index]);
-      fs.writeFileSync(
-        `${directory}/${pages[index].split("/")[4]}.html`,
-        response.data,
-        (err) => {
+      const fileName = `${directory}/${pages[index].split("/")[4]}.html`;
+      if (!fs.existsSync(fileName)) {
+        fs.writeFileSync(fileName, response.data, (err) => {
           if (err) throw err;
           console.log("Done");
-        }
-      );
-    }, 40000 + Math.floor(Math.random() * 40000));
+        });
+      }
+    }, index * 4000 + Math.floor(Math.random() * 4000));
   }
 };
 

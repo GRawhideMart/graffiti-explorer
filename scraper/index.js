@@ -40,13 +40,13 @@ directories.forEach((directory) => {
           type: "Point",
           coordinates,
         };
-        console.log({
-          image,
-          title,
-          author,
-          city,
-          location,
-        });
+        // console.log({
+        //   image,
+        //   title,
+        //   author,
+        //   city,
+        //   location,
+        // });
         Graffiti.create({
           // use Sequelize's model to insert information in the DB
           image,

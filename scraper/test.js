@@ -8,10 +8,10 @@ const kievUrl = "https://graffiti-database.com/Ukraine/Kiev";
 
 //const allPages = [];
 
-buildPagesArray(kievUrl).then((result) => {
+buildPagesArray(londonUrl).then((result) => {
   //allPages.push(...result);
-  console.log(result);
-  downloader(result, "kiev")
+  console.log("Found", result.length, "items");
+  downloader(result, "london")
     .then(() => console.log("Done"))
     .catch((err) => console.error(err));
 });
