@@ -32,7 +32,7 @@ const Map = () => {
     <div>I'm loading</div>
   ) : (
     position[0] != null && position[1] != null && (
-      <MapContainer style={{ height: "780px" }} center={position} zoom={13}>
+      <MapContainer style={{ height: "100vh" }} center={position} zoom={13}>
         <TileLayer
           url="https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}"
           accessToken="pk.eyJ1IjoiZ2l1bGlvbWFyaW9tYXJ0ZW5hIiwiYSI6ImNrdWNtOWp0bTEyNWMyb21vaG4wOTQ3azAifQ.ppikM0e7Ny-1iZtrIxXa1g"

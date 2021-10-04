@@ -15,6 +15,6 @@ code {
     monospace;
 }
 
-#map {
-  height: 780px;
+.markercluster-map {
+  height: 90vh;
 }

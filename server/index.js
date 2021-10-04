@@ -44,11 +44,9 @@ app.get("/", (req, res) => {
   res.status(200).end("Hello World");
 });
 
-app.get("/api/location", (req, res) => {
-  Graffiti.findAll({ attributes: ["geolocation"] }).then((data) => {
-    res.json(data);
-  });
-});
+// Routes
+require("./routes/graffiti.routes")(app);
+require("./routes/geolocation.routes")(app);
 
 // Listen
 const PORT = process.env.PORT || 8000;
