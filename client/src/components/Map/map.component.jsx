@@ -7,6 +7,8 @@ import "leaflet-defaulticon-compatibility";
 
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 
+import MarkerClusterGroup from "react-leaflet-markercluster";
+
 const Map = () => {
   const coordinates = useSelector((state) => state.coordinates.coordinates)[0];
   const isLoading = useSelector((state) => state.loading);
@@ -27,7 +29,7 @@ const Map = () => {
   const [position, setPosition] = useState([]);
 
   return isLoading ? (
-    <div></div>
+    <div>I'm loading</div>
   ) : (
     position[0] != null && position[1] != null && (
       <MapContainer style={{ height: "780px" }} center={position} zoom={13}>
@@ -36,13 +38,15 @@ const Map = () => {
           accessToken="pk.eyJ1IjoiZ2l1bGlvbWFyaW9tYXJ0ZW5hIiwiYSI6ImNrdWNtOWp0bTEyNWMyb21vaG4wOTQ3azAifQ.ppikM0e7Ny-1iZtrIxXa1g"
           id="mapbox/streets-v11"
         />
-        {coordinates &&
-          coordinates.map((coordinate) => (
-            <GeoJSON
-              data={coordinate.geolocation}
-              key={coordinates.indexOf(coordinate)}
-            />
-          ))}
+        <MarkerClusterGroup>
+          {coordinates &&
+            coordinates.map((coordinate) => (
+              <GeoJSON
+                data={coordinate.geolocation}
+                key={coordinates.indexOf(coordinate)}
+              />
+            ))}
+        </MarkerClusterGroup>
       </MapContainer>
     )
   );
