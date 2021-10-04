@@ -1,8 +1,8 @@
-import { Fragment, useCallback, useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCoordinates } from "../../redux/slices/coordinates.slice";
 import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 
 const Map = () => {
   const coordinates = useSelector((state) => state.coordinates.coordinates)[0];
@@ -17,48 +17,35 @@ const Map = () => {
     initFetch();
   }, [initFetch]);
 
-  return (
-    <MapContainer
-      center={[51.505, -0.09]}
-      zoom={5}
-      scrollWheelZoom={true}
-      style={{ height: 700 }}
-    >
-      <TileLayer
-        attribution="&copy; Graffiti Explorer contributors"
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      {/* {coordinates === undefined
-        ? null
-        : coordinates.map((element) => (
-            <Marker position={[element[1], element[0]]}>
-              <Popup></Popup>
-            </Marker>
-          ))} */}
-      {isLoading && <div />}
-      {coordinates === undefined ? (
-        <div />
-      ) : (
-        coordinates.forEach((coordinate) => (
-          <Fragment key={coordinates.indexOf(coordinate)}>
-            <Marker position={coordinate.geolocation.coordinates}>
-              <Popup></Popup>
-            </Marker>
-          </Fragment>
-        ))
-      )}
-      {/* {coordinates.map((element) => (
-        <Marker position={element}>
-          <Popup></Popup>
-        </Marker>
-      ))} */}
-      {/* <Marker position={[51.505, -0.09]}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker> */}
-    </MapContainer>
-  );
+  useEffect(() => {
+    var map = L.map("map").setView([51.505, -0.09], 13);
+
+    L.tileLayer(
+      "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+      {
+        attribution:
+          'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: "mapbox/streets-v11",
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken:
+          "pk.eyJ1IjoiZ2l1bGlvbWFyaW9tYXJ0ZW5hIiwiYSI6ImNrdWNtOWp0bTEyNWMyb21vaG4wOTQ3azAifQ.ppikM0e7Ny-1iZtrIxXa1g",
+      }
+    ).addTo(map);
+
+    if (coordinates) {
+      coordinates.forEach((coordinate) => {
+        L.geoJSON(coordinate.geolocation).bindPopup("Hi!").addTo(map);
+      });
+    }
+
+    return () => {
+      map.remove();
+    };
+  }, [coordinates]);
+
+  return <div id="map"></div>;
 };
 
 export default Map;

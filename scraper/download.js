@@ -70,7 +70,7 @@ const downloader = async (pages, rootDir) => {
   }
 
   for (let index = 0; index < pages.length; index++) {
-    setInterval(async () => {
+    setTimeout(async () => {
       const response = await axios.get(pages[index]);
       const fileName = `${directory}/${pages[index].split("/")[4]}.html`;
       if (!fs.existsSync(fileName)) {
