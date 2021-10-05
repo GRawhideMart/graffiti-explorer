@@ -9,10 +9,10 @@ import {
   TileLayer,
   Popup,
   FeatureGroup,
-  Circle,
+  Marker,
 } from "react-leaflet";
 
-//import MarkerClusterGroup from "react-leaflet-markercluster";
+import MarkerClusterGroup from "react-leaflet-markercluster";
 import { fetchGraffiti } from "../../redux/slices/graffiti.slice";
 
 const Map = () => {
@@ -47,43 +47,28 @@ const Map = () => {
           accessToken="pk.eyJ1IjoiZ2l1bGlvbWFyaW9tYXJ0ZW5hIiwiYSI6ImNrdWNtOWp0bTEyNWMyb21vaG4wOTQ3azAifQ.ppikM0e7Ny-1iZtrIxXa1g"
           id="mapbox/streets-v11"
         />
-        {/* <MarkerClusterGroup> */}
-        {/* {coordinates &&
-            coordinates.map((coordinate) => (
-              <GeoJSON
-                data={coordinate.geolocation}
-                key={coordinates.indexOf(coordinate)}
-              >
-                <Popup>
-                  <p>some text</p>
-                </Popup>
-              </GeoJSON>
-            ))} */}
-        {coordinates &&
-          coordinates.features.map((feature, index) => (
-            <FeatureGroup key={index}>
-              <Popup>
-                <img
-                  src={feature.properties.image}
-                  alt={feature.properties.title}
-                  style={{ height: 100, width: 100 }}
-                />
-              </Popup>
-              <Circle
-                center={[
-                  feature.geometry.coordinates[1],
-                  feature.geometry.coordinates[0],
-                ]}
-                fillColor="#ff7800"
-                radius={6}
-                color={"#000"}
-                weight={1}
-                opacity={1}
-                fillOpacity={0.8}
-              />
-            </FeatureGroup>
-          ))}
-        {/* </MarkerClusterGroup> */}
+
+        <MarkerClusterGroup>
+          {coordinates &&
+            coordinates.features.map((feature, index) => (
+              <FeatureGroup key={index}>
+                <Marker
+                  position={[
+                    feature.geometry.coordinates[1],
+                    feature.geometry.coordinates[0],
+                  ]}
+                >
+                  <Popup>
+                    <img
+                      src={feature.properties.image}
+                      alt={feature.properties.title}
+                      style={{ height: 100, width: 100 }}
+                    />
+                  </Popup>
+                </Marker>
+              </FeatureGroup>
+            ))}
+        </MarkerClusterGroup>
       </MapContainer>
     )
   );
