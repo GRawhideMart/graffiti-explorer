@@ -9,7 +9,23 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
+import { useSelector, useDispatch } from "react-redux";
+import { useCallback, useEffect } from "react";
+import { fetchGraffiti } from "../../redux/slices/graffiti.slice";
+
 const Home = ({ cards }) => {
+  const dispatch = useDispatch();
+  const graffiti = useSelector((state) => state.graffiti.items)[0];
+  console.log(graffiti);
+
+  const initFetch = useCallback(() => {
+    dispatch(fetchGraffiti());
+  }, [dispatch]);
+
+  useEffect(() => {
+    initFetch();
+  }, [initFetch]);
+
   return (
     <div>
       {/* Hero unit */}
@@ -28,7 +44,7 @@ const Home = ({ cards }) => {
             color="text.primary"
             gutterBottom
           >
-            Album layout
+            Trending
           </Typography>
           <Typography
             variant="h5"
@@ -47,8 +63,8 @@ const Home = ({ cards }) => {
       <Container sx={{ py: 8 }} maxWidth="md">
         {/* End hero unit */}
         <Grid container spacing={4}>
-          {cards.map((card) => (
-            <Grid item key={card} xs={12} sm={6} md={4}>
+          {graffiti.slice(0, 15).map((paint) => (
+            <Grid item key={graffiti.indexOf(paint)} xs={12} sm={6} md={4}>
               <Card
                 sx={{
                   height: "100%",
@@ -56,23 +72,20 @@ const Home = ({ cards }) => {
                   flexDirection: "column",
                 }}
               >
-                <CardMedia
-                  component="img"
-                  image="https://source.unsplash.com/random"
-                  alt="random"
-                />
+                <CardMedia component="img" image={paint.image} alt="random" />
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography gutterBottom variant="h5" component="h2">
-                    Heading
+                    {paint.title}
                   </Typography>
-                  <Typography>
-                    This is a media card. You can use this section to describe
-                    the content.
+                  <Typography>{paint.author}</Typography>
+                  <Typography variant="h6" component="p">
+                    {paint.city}
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small">View</Button>
-                  <Button size="small">Edit</Button>
+                  <Button size="small" style={{ textAlign: "center" }}>
+                    View
+                  </Button>
                 </CardActions>
               </Card>
             </Grid>
