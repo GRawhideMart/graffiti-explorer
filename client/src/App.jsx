@@ -14,8 +14,6 @@ import Home from "./components/Home";
 import Footer from "./components/Footer";
 import Map from "./components/Map";
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
 export default function App() {
   // Side Drawer state and elements
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -57,11 +55,7 @@ export default function App() {
       <Header isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
       <main>
         <Switch>
-          <Route
-            exact
-            path={["/", "/home"]}
-            component={() => <Home cards={cards} />}
-          />
+          <Route exact path={["/", "/home"]} component={() => <Home />} />
           <Route exact path={"/map"} component={() => <Map />} />
           <Route
             exact

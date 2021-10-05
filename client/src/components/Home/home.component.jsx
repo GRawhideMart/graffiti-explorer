@@ -18,6 +18,20 @@ const Home = ({ cards }) => {
   const graffiti = useSelector((state) => state.graffiti.items)[0];
   console.log(graffiti);
 
+  function getRandomSubarray(arr, size) {
+    var shuffled = arr.slice(0),
+      i = arr.length,
+      temp,
+      index;
+    while (i--) {
+      index = Math.floor((i + 1) * Math.random());
+      temp = shuffled[index];
+      shuffled[index] = shuffled[i];
+      shuffled[i] = temp;
+    }
+    return shuffled.slice(0, size);
+  }
+
   const initFetch = useCallback(() => {
     dispatch(fetchGraffiti());
   }, [dispatch]);
@@ -63,7 +77,7 @@ const Home = ({ cards }) => {
       <Container sx={{ py: 8 }} maxWidth="md">
         {/* End hero unit */}
         <Grid container spacing={4}>
-          {graffiti.slice(0, 15).map((paint) => (
+          {getRandomSubarray(graffiti, 15).map((paint) => (
             <Grid item key={graffiti.indexOf(paint)} xs={12} sm={6} md={4}>
               <Card
                 sx={{
