@@ -1,32 +1,41 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCoordinates } from "../../redux/slices/coordinates.slice";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css";
 import "leaflet-defaulticon-compatibility";
 
-import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Popup,
+  FeatureGroup,
+  Circle,
+} from "react-leaflet";
 
-import MarkerClusterGroup from "react-leaflet-markercluster";
+//import MarkerClusterGroup from "react-leaflet-markercluster";
+import { fetchGraffiti } from "../../redux/slices/graffiti.slice";
 
 const Map = () => {
-  const coordinates = useSelector((state) => state.coordinates.coordinates)[0];
+  const coordinates = useSelector((state) => state.graffiti.items)[0]; // coordinates come from Redux slice, refer to Redux folder
   const isLoading = useSelector((state) => state.loading);
   const dispatch = useDispatch();
 
   const initFetch = useCallback(() => {
-    dispatch(fetchCoordinates());
+    dispatch(fetchGraffiti());
   }, [dispatch]);
 
   useEffect(() => {
     initFetch();
-
     navigator.geolocation.getCurrentPosition(function (position) {
       setPosition([position.coords.latitude, position.coords.longitude]);
     });
   }, [initFetch]);
 
   const [position, setPosition] = useState([]);
+
+  if (coordinates !== undefined) {
+    console.log(coordinates.features);
+  }
 
   return isLoading ? (
     <div>I'm loading</div>
@@ -38,15 +47,43 @@ const Map = () => {
           accessToken="pk.eyJ1IjoiZ2l1bGlvbWFyaW9tYXJ0ZW5hIiwiYSI6ImNrdWNtOWp0bTEyNWMyb21vaG4wOTQ3azAifQ.ppikM0e7Ny-1iZtrIxXa1g"
           id="mapbox/streets-v11"
         />
-        <MarkerClusterGroup>
-          {coordinates &&
+        {/* <MarkerClusterGroup> */}
+        {/* {coordinates &&
             coordinates.map((coordinate) => (
               <GeoJSON
                 data={coordinate.geolocation}
                 key={coordinates.indexOf(coordinate)}
+              >
+                <Popup>
+                  <p>some text</p>
+                </Popup>
+              </GeoJSON>
+            ))} */}
+        {coordinates &&
+          coordinates.features.map((feature, index) => (
+            <FeatureGroup key={index}>
+              <Popup>
+                <img
+                  src={feature.properties.image}
+                  alt={feature.properties.title}
+                  style={{ height: 100, width: 100 }}
+                />
+              </Popup>
+              <Circle
+                center={[
+                  feature.geometry.coordinates[1],
+                  feature.geometry.coordinates[0],
+                ]}
+                fillColor="#ff7800"
+                radius={6}
+                color={"#000"}
+                weight={1}
+                opacity={1}
+                fillOpacity={0.8}
               />
-            ))}
-        </MarkerClusterGroup>
+            </FeatureGroup>
+          ))}
+        {/* </MarkerClusterGroup> */}
       </MapContainer>
     )
   );

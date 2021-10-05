@@ -8,15 +8,27 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { fetchGraffiti } from "../../redux/slices/graffiti.slice";
 
-const Home = ({ cards }) => {
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
+const Home = () => {
   const dispatch = useDispatch();
   const graffiti = useSelector((state) => state.graffiti.items)[0];
-  console.log(graffiti);
 
   function getRandomSubarray(arr, size) {
     var shuffled = arr.slice(0),
@@ -39,6 +51,18 @@ const Home = ({ cards }) => {
   useEffect(() => {
     initFetch();
   }, [initFetch]);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  if (graffiti !== undefined) {
+    console.log(graffiti.features);
+  }
 
   return (
     <div>
@@ -77,33 +101,66 @@ const Home = ({ cards }) => {
       <Container sx={{ py: 8 }} maxWidth="md">
         {/* End hero unit */}
         <Grid container spacing={4}>
-          {getRandomSubarray(graffiti, 15).map((paint) => (
-            <Grid item key={graffiti.indexOf(paint)} xs={12} sm={6} md={4}>
-              <Card
-                sx={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <CardMedia component="img" image={paint.image} alt="random" />
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {paint.title}
-                  </Typography>
-                  <Typography>{paint.author}</Typography>
-                  <Typography variant="h6" component="p">
-                    {paint.city}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small" style={{ textAlign: "center" }}>
-                    View
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
+          {graffiti &&
+            getRandomSubarray(graffiti.features, 15).map((paint) => (
+              <Grid item key={paint.properties.id} xs={12} sm={6} md={4}>
+                <Card
+                  sx={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    image={paint.properties.image}
+                    alt="random"
+                  />
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {paint.title}
+                    </Typography>
+                    <Typography>{paint.properties.author}</Typography>
+                    <Typography variant="h6" component="p">
+                      {paint.properties.city}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button
+                      onClick={handleOpen}
+                      size="small"
+                      style={{ textAlign: "center" }}
+                    >
+                      View
+                    </Button>
+                    <Modal
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
+                    >
+                      <Box sx={modalStyle}>
+                        <Typography
+                          id="modal-modal-title"
+                          variant="h6"
+                          component="h2"
+                        >
+                          {paint.properties.title}
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                          {paint.author}
+                        </Typography>
+                        <img
+                          style={{ height: 100, width: 100 }}
+                          src={paint.properties.image}
+                          alt={paint.properties.title}
+                        />
+                      </Box>
+                    </Modal>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
         </Grid>
       </Container>
     </div>
