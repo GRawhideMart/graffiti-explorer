@@ -7231,6 +7231,13 @@ leaflet-defaulticon-compatibility@^0.1.1:
   resolved "https://registry.yarnpkg.com/leaflet-defaulticon-compatibility/-/leaflet-defaulticon-compatibility-0.1.1.tgz#ab72257b3da66fb48dab69a10c3824012a15a20a"
   integrity sha512-vDBFdlUAwjSEGep9ih8kfJilf6yN8V9zTbF5NC/1ZwLeGko3RUQepspPnGCRMFV51dY3Lb3hziboicrFz+rxQA==
 
+leaflet-geosearch@^3.5.2:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/leaflet-geosearch/-/leaflet-geosearch-3.5.2.tgz#609de940ea27f9202f8c25d4a75edc1ffbbb29b6"
+  integrity sha512-fMB6j43ituVkw7zzsn0sEzQ6KTArs4KsyXfs1jRlUTGoJkeWx6pe19YBuIgsoakpSHWAZpAGJuxIWRW8cjueyA==
+  optionalDependencies:
+    leaflet "^1.6.0"
+
 leaflet.markercluster@^1.4.1, leaflet.markercluster@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/leaflet.markercluster/-/leaflet.markercluster-1.5.1.tgz#4e352c8cbb9508e6175a20ac29cf179601907c4c"
