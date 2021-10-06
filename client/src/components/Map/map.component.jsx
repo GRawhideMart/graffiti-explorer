@@ -19,14 +19,14 @@ import {
 
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { fetchGraffiti } from "../../redux/slices/graffiti.slice";
+import { mapbox_access_key } from "../../keys";
 
 function LeafletgeoSearch() {
   const map = useMap();
   useEffect(() => {
     const provider = new MapBoxProvider({
       params: {
-        access_token:
-          "pk.eyJ1IjoiZ2l1bGlvbWFyaW9tYXJ0ZW5hIiwiYSI6ImNrdWNtOWp0bTEyNWMyb21vaG4wOTQ3azAifQ.ppikM0e7Ny-1iZtrIxXa1g",
+        access_token: mapbox_access_key,
       },
     });
 
@@ -48,6 +48,7 @@ const Map = () => {
   const coordinates = useSelector((state) => state.graffiti.items)[0]; // coordinates come from Redux slice, refer to Redux folder
   const isLoading = useSelector((state) => state.loading);
   const dispatch = useDispatch();
+  const [position, setPosition] = useState([45.464211, 9.191383]);
 
   const initFetch = useCallback(() => {
     dispatch(fetchGraffiti());
@@ -60,8 +61,6 @@ const Map = () => {
     });
   }, [initFetch]);
 
-  const [position, setPosition] = useState([]);
-
   return isLoading ? (
     <div>I'm loading</div>
   ) : (
@@ -69,7 +68,7 @@ const Map = () => {
       <MapContainer style={{ height: "100vh" }} center={position} zoom={13}>
         <TileLayer
           url="https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}"
-          accessToken="pk.eyJ1IjoiZ2l1bGlvbWFyaW9tYXJ0ZW5hIiwiYSI6ImNrdWNtOWp0bTEyNWMyb21vaG4wOTQ3azAifQ.ppikM0e7Ny-1iZtrIxXa1g"
+          accessToken={mapbox_access_key}
           id="mapbox/streets-v11"
         />
 

@@ -60,10 +60,6 @@ const Home = () => {
     setOpen(false);
   };
 
-  if (graffiti !== undefined) {
-    console.log(graffiti.features);
-  }
-
   return (
     <div>
       {/* Hero unit */}
