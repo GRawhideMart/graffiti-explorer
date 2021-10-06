@@ -14,8 +14,16 @@ const milanDir = path.join(__dirname, "milan");
 const nyDir = path.join(__dirname, "nyc");
 const bucharestDir = path.join(__dirname, "bucharest");
 const kievDir = path.join(__dirname, "kiev");
+const madridDir = path.join(__dirname, "madrid");
 
-const directories = [londonDir, milanDir, nyDir, bucharestDir, kievDir];
+const directories = [
+  londonDir,
+  milanDir,
+  nyDir,
+  bucharestDir,
+  kievDir,
+  madridDir,
+];
 
 // loop through each directory and file to scrape the informations
 directories.forEach((directory) => {
