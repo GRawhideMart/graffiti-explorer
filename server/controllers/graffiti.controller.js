@@ -90,6 +90,7 @@ exports.findById = (req, res, next) => {
 };
 
 exports.toggleFavorite = (req, res, next) => {
+  console.log(req.body);
   // must be applied to /api/graffiti/:id
   Graffiti.update(
     { isFavorite: req.body.isFavorite },

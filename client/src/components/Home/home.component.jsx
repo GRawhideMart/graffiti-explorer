@@ -9,10 +9,17 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import IconButton from "@mui/material/IconButton";
+
+import HeartButton from "@mui/icons-material/Favorite";
+import HeartButtonOutlined from "@mui/icons-material/FavoriteOutlined";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
-import { fetchGraffiti } from "../../redux/slices/graffiti.slice";
+import {
+  fetchGraffiti,
+  toggleFavorite,
+} from "../../redux/slices/graffiti.slice";
 
 const modalStyle = {
   position: "absolute",
@@ -60,6 +67,17 @@ const Home = () => {
     setOpen(false);
   };
 
+  const toggleFavoriteClick = ({ id, data }) => {
+    //console.log(id, data);
+    try {
+      dispatch(toggleFavorite({ id, data }))
+        .unwrap()
+        .then((res) => console.log(res));
+    } catch (error) {
+      console.error(error.response.data);
+    }
+  };
+
   return (
     <div>
       {/* Hero unit */}
@@ -98,7 +116,7 @@ const Home = () => {
         {/* End hero unit */}
         <Grid container spacing={4}>
           {graffiti &&
-            getRandomSubarray(graffiti.features, 15).map((paint) => (
+            graffiti.features.slice(0, 15).map((paint) => (
               <Grid item key={paint.properties.id} xs={12} sm={6} md={4}>
                 <Card
                   sx={{
@@ -129,6 +147,25 @@ const Home = () => {
                     >
                       View
                     </Button>
+                    <IconButton
+                      onClick={() => {
+                        console.log(paint.properties);
+                        toggleFavoriteClick({
+                          id: paint.properties.id,
+                          data: {
+                            isFavorite: !paint.properties.isFavorite,
+                          },
+                        });
+                      }}
+                      size="small"
+                      style={{ textAlign: "right" }}
+                    >
+                      {paint.properties.isFavorite ? (
+                        <HeartButton color="primary" />
+                      ) : (
+                        <HeartButtonOutlined color="secondary" />
+                      )}
+                    </IconButton>
                     <Modal
                       open={open}
                       onClose={handleClose}
