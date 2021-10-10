@@ -1,3 +1,5 @@
+/** This script takes a baseURL (refer to the testing ones below) and downloads the pages for the city */
+
 const { buildPagesArray, downloader } = require("./download");
 
 const nyUrl = "https://graffiti-database.com/USA/New%20York%20City";
