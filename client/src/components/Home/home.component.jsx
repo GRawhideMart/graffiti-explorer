@@ -12,34 +12,15 @@ import IconButton from "@mui/material/IconButton";
 import HeartButton from "@mui/icons-material/Favorite";
 import HeartButtonOutlined from "@mui/icons-material/FavoriteOutlined";
 
-import { useSelector, useDispatch } from "react-redux";
-import { useCallback, useEffect } from "react";
-import {
-  fetchGraffiti,
-  toggleFavorite,
-} from "../../redux/slices/graffiti.slice";
+import { useEffect } from "react";
+import useHomeLogic from "./home.logic";
 
 const Home = () => {
-  const dispatch = useDispatch();
-  const graffiti = useSelector((state) => state.graffiti.items)[0];
-
-  const initFetch = useCallback(() => {
-    dispatch(fetchGraffiti());
-  }, [dispatch]);
+  const { graffiti, initFetch, handleFavorite } = useHomeLogic();
 
   useEffect(() => {
     initFetch();
   }, [initFetch]);
-
-  const toggleFavoriteClick = ({ id, data }) => {
-    try {
-      dispatch(toggleFavorite({ id, data }))
-        .unwrap()
-        .then((res) => console.log("Action dispatched"));
-    } catch (error) {
-      console.error(error.response.data);
-    }
-  };
 
   return (
     <div>
@@ -105,7 +86,7 @@ const Home = () => {
                   <CardActions>
                     <IconButton
                       onClick={() => {
-                        toggleFavoriteClick({
+                        handleFavorite({
                           id: paint.properties.id,
                           data: {
                             isFavorite: !paint.properties.isFavorite,

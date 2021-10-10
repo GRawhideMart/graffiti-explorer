@@ -10,20 +10,10 @@ import IconButton from "@mui/material/IconButton";
 import HeartButton from "@mui/icons-material/Favorite";
 import HeartButtonOutlined from "@mui/icons-material/FavoriteOutlined";
 
-import { toggleFavorite } from "../../redux/slices/graffiti.slice";
-import { useDispatch } from "react-redux";
+import useHomeLogic from "../Home/home.logic";
 
 const PopupContent = ({ graffiti }) => {
-  const dispatch = useDispatch();
-  const toggleFavoriteClick = ({ id, data }) => {
-    try {
-      dispatch(toggleFavorite({ id, data }))
-        .unwrap()
-        .then((res) => console.log("Action dispatched"));
-    } catch (error) {
-      console.error(error.response.data);
-    }
-  };
+  const { handleFavorite } = useHomeLogic();
   return (
     <Box
       sx={{
@@ -61,7 +51,7 @@ const PopupContent = ({ graffiti }) => {
         </Card>
         <IconButton
           onClick={() => {
-            toggleFavoriteClick({
+            handleFavorite({
               id: graffiti.properties.id,
               data: {
                 isFavorite: !graffiti.properties.isFavorite,
