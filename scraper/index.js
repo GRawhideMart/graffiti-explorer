@@ -42,19 +42,10 @@ directories.forEach((directory) => {
           .text()
           .replace("Geo location: ", "")
           .split(";");
-        // const longitude = coordinates[0];
-        // const latitude = coordinates[1];
         const location = {
           type: "Point",
           coordinates,
         };
-        // console.log({
-        //   image,
-        //   title,
-        //   author,
-        //   city,
-        //   location,
-        // });
         Graffiti.create({
           // use Sequelize's model to insert information in the DB
           image,

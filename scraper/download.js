@@ -4,12 +4,6 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const baseUrl = "https://graffiti-database.com";
 
-const createDirectoryIfNotExists = (name) => {
-  const dirName = path.join(__dirname, name);
-  if (fs.existsSync(dirName)) return;
-  fs.mkdirSync(dirName);
-};
-
 // Scrapes the categories page for each city (typically it's neighborhoods)
 const getCategories = async (cityUrl) => {
   const cityCategories = [];
