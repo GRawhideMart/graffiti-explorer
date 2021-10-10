@@ -20,6 +20,7 @@ import {
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { fetchGraffiti } from "../../redux/slices/graffiti.slice";
 import { mapbox_access_key } from "../../keys";
+import PopupContent from "./popup.content";
 
 function LeafletgeoSearch() {
   const map = useMap();
@@ -83,11 +84,7 @@ const Map = () => {
                   ]}
                 >
                   <Popup>
-                    <img
-                      src={feature.properties.image}
-                      alt={feature.properties.title}
-                      style={{ height: 100, width: 100 }}
-                    />
+                    <PopupContent graffiti={feature} />
                   </Popup>
                 </Marker>
               </FeatureGroup>

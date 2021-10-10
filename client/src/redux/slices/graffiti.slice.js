@@ -46,7 +46,7 @@ const graffitiSlice = createSlice({
       const index = state.items[0].features.findIndex(
         (graffiti) => graffiti.properties.id === action.payload.id
       );
-      console.log(state.items[0].features[index].properties.isFavorite);
+
       state.items[0].features[index].properties.isFavorite =
         !state.items[0].features[index].properties.isFavorite;
     },
