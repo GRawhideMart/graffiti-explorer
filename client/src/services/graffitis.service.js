@@ -5,7 +5,6 @@ const getAll = () => {
 };
 
 const toggleFavorite = ({ id, data }) => {
-  console.log(data);
   return http.put(`/api/graffiti/${id}`, data);
 };
 

@@ -17,9 +17,11 @@ export const toggleFavorite = createAsyncThunk(
   }
 );
 
+const initialState = { items: [], loading: false, errorMessage: "" };
+
 const graffitiSlice = createSlice({
   name: "graffiti",
-  initialState: { items: [], loading: false, errorMessage: "" },
+  initialState,
   reducers: {},
   extraReducers: {
     [fetchGraffiti.pending]: (state, action) => {
@@ -41,13 +43,12 @@ const graffitiSlice = createSlice({
       state.loading = false;
     },
     [toggleFavorite.fulfilled]: (state, action) => {
-      const index = state.items.findIndex(
-        (graffiti) => graffiti.id === action.payload.id
+      const index = state.items[0].features.findIndex(
+        (graffiti) => graffiti.properties.id === action.payload.id
       );
-      state.items[index] = {
-        ...state.items[index],
-        ...action.payload,
-      };
+      console.log(state.items[0].features[index].properties.isFavorite);
+      state.items[0].features[index].properties.isFavorite =
+        !state.items[0].features[index].properties.isFavorite;
     },
   },
 });

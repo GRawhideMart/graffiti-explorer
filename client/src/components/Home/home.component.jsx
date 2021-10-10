@@ -68,11 +68,10 @@ const Home = () => {
   };
 
   const toggleFavoriteClick = ({ id, data }) => {
-    //console.log(id, data);
     try {
       dispatch(toggleFavorite({ id, data }))
         .unwrap()
-        .then((res) => console.log(res));
+        .then((res) => console.log("Action dispatched"));
     } catch (error) {
       console.error(error.response.data);
     }
@@ -149,7 +148,6 @@ const Home = () => {
                     </Button>
                     <IconButton
                       onClick={() => {
-                        console.log(paint.properties);
                         toggleFavoriteClick({
                           id: paint.properties.id,
                           data: {
