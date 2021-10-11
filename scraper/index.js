@@ -15,6 +15,7 @@ const nyDir = path.join(__dirname, "nyc");
 const bucharestDir = path.join(__dirname, "bucharest");
 const kievDir = path.join(__dirname, "kiev");
 const madridDir = path.join(__dirname, "madrid");
+const romeDir = path.join(__dirname, "rome");
 
 const directories = [
   londonDir,
@@ -23,38 +24,43 @@ const directories = [
   bucharestDir,
   kievDir,
   madridDir,
+  romeDir,
 ];
 
 // loop through each directory and file to scrape the informations
 directories.forEach((directory) => {
-  fs.readdir(directory, (err, files) => {
-    if (err) throw err;
-    files.forEach((file) => {
-      fs.readFile(path.join(directory, file), (err, data) => {
-        if (err) throw err;
-        const html = data.toString();
-        const $ = cheerio.load(html); // This eventually will have to come from files within the folders
-        const image = $("#detail-image").attr("data-image");
-        const title = $("#detail-image").attr("data-title");
-        const city = $("#detail-image").attr("data-caption").split(",")[0];
-        const author = $("#detail-image").attr("data-caption").split("By: ")[1];
-        const coordinates = $(".geo")
-          .text()
-          .replace("Geo location: ", "")
-          .split(";");
-        const location = {
-          type: "Point",
-          coordinates,
-        };
-        Graffiti.create({
-          // use Sequelize's model to insert information in the DB
-          image,
-          title,
-          author,
-          city,
-          geolocation: location,
+  if (fs.existsSync(directory)) {
+    fs.readdir(directory, (err, files) => {
+      if (err) throw err;
+      files.forEach((file) => {
+        fs.readFile(path.join(directory, file), (err, data) => {
+          if (err) throw err;
+          const html = data.toString();
+          const $ = cheerio.load(html); // This eventually will have to come from files within the folders
+          const image = $("#detail-image").attr("data-image");
+          const title = $("#detail-image").attr("data-title");
+          const city = $("#detail-image").attr("data-caption").split(",")[0];
+          const author = $("#detail-image")
+            .attr("data-caption")
+            .split("By: ")[1];
+          const coordinates = $(".geo")
+            .text()
+            .replace("Geo location: ", "")
+            .split(";");
+          const location = {
+            type: "Point",
+            coordinates,
+          };
+          Graffiti.create({
+            // use Sequelize's model to insert information in the DB
+            image,
+            title,
+            author,
+            city,
+            geolocation: location,
+          });
         });
       });
     });
-  });
+  }
 });
