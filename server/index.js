@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true })); // Parse application/x-www-form
 /* with a '=' between the key and the value. Non-alphanumeric characters in both keys and values are percent encoded */
 app.use(
   cors({
-    origin: "http://localhost:8081",
+    origin: ["http://localhost:8081", "http://192.168.1.15:8081"],
   })
 );
 
