@@ -76,11 +76,11 @@ const Home = () => {
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      {paint.title}
+                      {paint.properties.title}
                     </Typography>
-                    <Typography>{paint.properties.author}</Typography>
+                    <Typography>{paint.properties.city}</Typography>
                     <Typography variant="h6" component="p">
-                      {paint.properties.city}
+                      {paint.properties.author}
                     </Typography>
                   </CardContent>
                   <CardActions>
