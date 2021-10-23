@@ -26,6 +26,8 @@
 /client/npm-debug.log*
 /client/yarn-debug.log*
 /client/yarn-error.log*
+.metals
+.vscode
 
 # keys
 /client/src/keys.js

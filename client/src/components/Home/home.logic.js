@@ -9,6 +9,20 @@ const useHomeLogic = () => {
   const dispatch = useDispatch();
   const graffiti = useSelector((state) => state.graffiti.items[0]);
 
+  // const onlyFavorites = graffiti.features.filter(
+  //   (element) => element.properties.isFavorite
+  // );
+
+  const fetchFavorites = (graffiti) => {
+    const onlyFavorites =
+      graffiti &&
+      graffiti.features.filter((element) => element.properties.isFavorite);
+    return {
+      type: "FeatureCollection",
+      features: onlyFavorites,
+    };
+  };
+
   const initFetch = useCallback(() => {
     dispatch(fetchGraffiti());
   }, [dispatch]);
@@ -21,7 +35,7 @@ const useHomeLogic = () => {
     }
   };
 
-  return { graffiti, initFetch, handleFavorite };
+  return { graffiti, initFetch, handleFavorite, fetchFavorites };
 };
 
 export default useHomeLogic;
