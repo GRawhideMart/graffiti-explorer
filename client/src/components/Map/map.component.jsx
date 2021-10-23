@@ -28,6 +28,9 @@ const Map = () => {
     navigator.geolocation.getCurrentPosition(function (position) {
       setPosition([position.coords.latitude, position.coords.longitude]);
     });
+    return () => {
+      console.log("Clean up ran");
+    };
     //eslint-disable-next-line
   }, [initFetch]);
 
@@ -35,7 +38,12 @@ const Map = () => {
     <div>I'm loading</div>
   ) : (
     position[0] != null && position[1] != null && (
-      <MapContainer style={{ height: "100vh" }} center={position} zoom={13}>
+      <MapContainer
+        style={{ height: "100vh" }}
+        center={position}
+        zoom={13}
+        closePopupOnClick={false}
+      >
         <TileLayer
           url="https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}"
           accessToken={mapbox_access_key}
@@ -52,7 +60,10 @@ const Map = () => {
                     feature.geometry.coordinates[0],
                   ]}
                 >
-                  <Popup>
+                  <Popup
+                    onOpen={() => console.log("I opened")}
+                    onClose={() => console.log("I closed")}
+                  >
                     <PopupContent graffiti={feature} />
                   </Popup>
                 </Marker>

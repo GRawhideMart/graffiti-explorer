@@ -7,8 +7,8 @@ import Typography from "@mui/material/Typography";
 
 import IconButton from "@mui/material/IconButton";
 
-import HeartButton from "@mui/icons-material/Favorite";
-import HeartButtonOutlined from "@mui/icons-material/FavoriteOutlined";
+import HeartButton from "@mui/icons-material/FavoriteSharp";
+import HeartButtonOutlined from "@mui/icons-material/FavoriteBorderSharp";
 
 import useHomeLogic from "../Home/home.logic";
 
@@ -64,7 +64,7 @@ const PopupContent = ({ graffiti }) => {
           {graffiti.properties.isFavorite ? (
             <HeartButton color="primary" />
           ) : (
-            <HeartButtonOutlined color="secondary" />
+            <HeartButtonOutlined color="primary" />
           )}
         </IconButton>
       </Container>
