@@ -44,7 +44,7 @@ Now the server can be run. Go into the server folder and run `npm install` to re
 
 The scraper does not need any particular setup, it can be used out-of-the-box. However, a precise sequence must be followed:
 
-- Go to [this link](graffiti-database.com/countries) and navigate to a city (for now it only works if the city has subcategories)
+- Go to [this link](https://www.graffiti-database.com/countries) and navigate to a city (for now it only works if the city has subcategories)
 - Grab the URL **WITHOUT THE /categories part** (this is important)
 - Open _scraper/urlDownloader.js_ file and add a variable (for example `const krakowUrl = 'https://graffiti-database.com/Poland/Krakow'`)
 - Edit line 14 with the name of the variable and line 17 with the name of the folder (for example `"krakow"`)
